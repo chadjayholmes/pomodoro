@@ -12,7 +12,9 @@ This current version is my first iteration of this application. As I have gone t
 
 ## Features to come
 ```
-An actual database allowing for account based use and note saving
+-An actual database allowing for account based use and note saving
+-Category creation during a New Summary creaetion
+-Configurable break periods between sprints
 ```
 
 
