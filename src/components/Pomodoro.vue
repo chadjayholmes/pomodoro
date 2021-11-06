@@ -160,6 +160,7 @@ export default {
 }
 
 .timer-buttons{
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-around;
   width: 400px;
