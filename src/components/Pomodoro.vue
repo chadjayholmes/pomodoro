@@ -176,6 +176,7 @@ export default {
   color: white;
   background: white;
   border: none;
+  overflow: visible
 }
 
 .message {
