@@ -49,7 +49,7 @@ export default {
       })
       let date = moment( new Date().toJSON().slice(0, 10) ).format('MMMM Do YYYY')
 
-      let tempSummary = {title: this.summary.title, description: this.summary.description, category: tempCategories, dateAdded: date}
+      let tempSummary = {title: this.summary.title, description: this.summary.description, categories: tempCategories, dateAdded: date}
       this.$root.$data.summaries.push(tempSummary);
       this.summary.title = '';
       this.summary.description = '';
@@ -108,6 +108,7 @@ export default {
   color: white;
   border-radius: 5px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .form-check-input{

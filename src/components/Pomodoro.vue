@@ -191,4 +191,13 @@ export default {
   background-color: lightgrey !important;
 }
 
+@media only screen and (max-width: 600px){
+  .timer-text{
+    font-size: 120px;
+  }
+  .progress{
+    width: 100%;
+  }
+}
+
 </style>
