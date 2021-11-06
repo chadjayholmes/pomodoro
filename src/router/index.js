@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Summarize from '../views/Summarize.vue'
+import MySummaries from '../views/MySummaries'
 
 Vue.use(VueRouter)
 
@@ -13,8 +14,13 @@ const routes = [
   },
   {
     path: '/Summarize',
-    name: Summarize,
+    name: 'Summarize',
     component: Summarize
+  },
+  {
+    path: '/MySummaries',
+    name: 'MySummaries',
+    component: MySummaries
   }
 ]
 

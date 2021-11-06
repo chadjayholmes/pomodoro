@@ -3,11 +3,16 @@
     <div id="nav">
       <router-link class="link-text" to="/">Pomodoro</router-link>
     </div>
+    <div class="sub-links">
+      <router-link class="link-text new-summary-link" to="/Summarize">New Summary</router-link>
+      <router-link class="link-text my-summaries-link" to="/MySummaries">My Summaries</router-link>
+    </div>
     <router-view/>
   </div>
 </template>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,12 +22,23 @@
 
 #nav{
   font-size: 60px;
-  color: #2c3e50;
-  margin-top: 80px;
+  color: #708090;
+  margin-top: 45px;
 }
 
 .link-text{
-  color: #2c3e50;
+  margin-bottom: 45px;
+  color: #3f4a60;
+  font-weight: bold;
+}
+
+.sub-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.my-summaries-link{
+  margin-left: 25px
 }
 
 

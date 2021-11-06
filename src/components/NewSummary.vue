@@ -9,10 +9,10 @@
       <textarea v-model="summary.description" class="form-control" id="FormControlInput2" rows="6"></textarea>
     </div>
     <div class="form-group submit-button">
-      <button @click.prevent="addSummary">Add Summary</button>
+      <button class="submit" @click.prevent="addSummary">Add Summary</button>
     </div>
     <p>Select Category(s)</p>
-    <div class="form-group" v-for="category in this.$root.$data.categories" :key="category">
+    <div class="form-group categories" v-for="category in this.$root.$data.categories" :key="category">
       <input @change="appendCategory(category)" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
       <label class="form-check-label" for="defaultCheck1">{{ category }}</label>
     </div>
@@ -22,6 +22,7 @@
 
 <script>
 //import Summaries from 'Summaries'
+import moment from 'moment';
 export default {
   name: "Summarize",
   components: {
@@ -33,10 +34,10 @@ export default {
   data() {
     return {
       summary: {
-        id: 2,
         title: '',
         description: '',
-        categories: []
+        categories: [],
+        dateAdded: ''
       }
     }
   },
@@ -46,9 +47,10 @@ export default {
       this.summary.categories.forEach(category => {
           tempCategories.push(category);
       })
-      let tempSummary = {id: this.summary.id, title: this.summary.title, description: this.summary.description, category: tempCategories}
+      let date = moment( new Date().toJSON().slice(0, 10) ).format('MMMM Do YYYY')
+
+      let tempSummary = {title: this.summary.title, description: this.summary.description, category: tempCategories, dateAdded: date}
       this.$root.$data.summaries.push(tempSummary);
-      this.summary.id = '';
       this.summary.title = '';
       this.summary.description = '';
       let myArray = document.getElementsByClassName("form-check-input")
@@ -94,6 +96,22 @@ export default {
 .submit-button{
   display: flex;
   justify-content: flex-end;
+}
+
+.categories {
+  text-align: left;
+  margin-left: 20px;
+}
+
+.submit {
+  background-color: #3f4a60;
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+.form-check-input{
+  cursor: pointer;
 }
 
 </style>
