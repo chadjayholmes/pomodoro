@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Summarize from '../views/Summarize.vue'
 import MySummaries from '../views/MySummaries'
+import Bookmarked from '../views/Bookmarked'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/MySummaries',
     name: 'MySummaries',
     component: MySummaries
+  },
+  {
+    path: '/Bookmarked',
+    name: 'Bookmarked',
+    component: Bookmarked
   }
 ]
 

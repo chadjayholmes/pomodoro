@@ -1,14 +1,19 @@
 <template>
-  <pomodoro></pomodoro>
+  <div>
+    <pomodoro></pomodoro>
+    <Footer></Footer>
+  </div>
 </template>
 
 <script>
 import Pomodoro from '../components/Pomodoro.vue'
+import Footer from "../components/Footer";
 
 export default {
   name: 'Home',
   components: {
-    Pomodoro
+    Pomodoro,
+    Footer
   }
 }
 </script>

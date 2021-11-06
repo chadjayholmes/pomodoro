@@ -1,23 +1,21 @@
 <template>
   <div>
-    <Summaries></Summaries>
+    <MyBookmarks></MyBookmarks>
     <Footer></Footer>
   </div>
-
 </template>
 
 <script>
-import Summaries from "../components/Summaries";
+import MyBookmarks from "../components/MyBookmarks";
 import Footer from "../components/Footer";
 export default {
-  name: "MySummaries",
+  name: "Bookmarked",
   components: {
-    Summaries,
+    MyBookmarks,
     Footer
   }
 }
 </script>
 
 <style scoped>
-
 </style>

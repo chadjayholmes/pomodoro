@@ -5,7 +5,8 @@
     </div>
     <div class="sub-links">
       <router-link class="link-text new-summary-link" to="/Summarize">New Summary</router-link>
-      <router-link class="link-text my-summaries-link" to="/MySummaries">My Summaries</router-link>
+      <router-link class="link-text my-summaries-link" to="/MySummaries">All Summaries</router-link>
+      <router-link class="link-text my-summaries-link" to="/Bookmarked">Bookmarked</router-link>
     </div>
     <router-view/>
   </div>
@@ -40,6 +41,7 @@
 .my-summaries-link{
   margin-left: 25px
 }
+
 
 
 </style>
