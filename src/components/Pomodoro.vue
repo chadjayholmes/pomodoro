@@ -8,23 +8,23 @@
     </div>
     <div class="timer-buttons">
       <button v-show="!timeRunning && !timeOut" @click="startTimer" class="play-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-play-fill" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-play-fill" viewBox="0 0 20 20">
           <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
         </svg>
       </button>
       <button v-show="timeRunning && !timeOut" @click='pauseTimer' class="pause-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pause-fill" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pause-fill" viewBox="0 0 20 20">
           <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
         </svg>
       </button>
       <button v-show="timeOut" @click="redirectToSummary" class="summary-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pencil-square" viewBox="0 0 20 20">
           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
         </svg>
       </button>
       <button @click='resetTimer' class="reset-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-arrow-clockwise" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
           <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
         </svg>
@@ -167,6 +167,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+  overflow: visible
 }
 
 .play-button, .pause-button, .reset-button, .summary-button {
