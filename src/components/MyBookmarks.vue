@@ -110,4 +110,11 @@ export default {
   margin-right:3px;
 }
 
+@media only screen and (max-width: 600px){
+  .summary-object{
+    width: 90%;
+  }
+
+}
+
 </style>
