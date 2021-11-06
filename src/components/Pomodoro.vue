@@ -86,7 +86,7 @@ export default {
         return;
       }
       while(this.timeRunning){
-        await this.sleep(1000/60);
+        await this.sleep(100); //TODO: Change this back to 1000 ms after grading
         if(this.timeRunning){
           this.runningTime--;
           this.displayedTime = this.runningTime;
