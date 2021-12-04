@@ -8,7 +8,7 @@
         </svg>
         icon in
         <router-link class="link-text" to="/MySummaries">All Summaries</router-link>
-        to set a summary as bookmarked
+        to bookmark a summary.
       </div>
       <div v-show="bookmarked.length !== 0">
         Click the
@@ -18,7 +18,7 @@
         </svg>
         icon in
         <router-link class="link-text" to="/MySummaries">All Summaries</router-link>
-        to remove a summary from bookmarks
+        to remove un-bookmark a summary.
       </div>
       <div v-for="summary in bookmarked" v-bind:key="summary" class="summary-object">
         <div class="title">
@@ -41,19 +41,29 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "MyBookmarks",
   data() {
     return{
       bookmarked: []
     }
   },
-  mounted() {
-    for(let i = 0; i < this.$root.$data.summaries.length; i++){
+  async mounted() {
+    let res = await axios.get('/api/summaries/');
+    let  summaries = res.data;
+    this.bookmarked = summaries.filter((summary) => {
+      return summary.bookmarked
+    });
+    console.log(this.bookmarked);
+
+    /*for(let i = 0; i < this.$root.$data.summaries.length; i++){
       if(this.$root.$data.summaries[i].bookmarked){
         this.bookmarked.push(this.$root.$data.summaries[i])
       }
-    }
+    }*/
   }
 }
 </script>
@@ -67,9 +77,10 @@ export default {
   width: 50%;
   margin-right: auto;
   margin-left: auto;
-  border-left: 4px solid lightgrey;
+  /*border-left: 4px solid lightgrey;*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 15px;
-  border-radius: 25px;
+  border-radius: 5px;
 
 }
 

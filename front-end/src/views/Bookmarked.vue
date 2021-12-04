@@ -9,6 +9,7 @@
 import MyBookmarks from "../components/MyBookmarks";
 import Footer from "../components/Footer";
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Bookmarked",
   components: {
     MyBookmarks,

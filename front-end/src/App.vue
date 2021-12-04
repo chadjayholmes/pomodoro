@@ -4,7 +4,8 @@
       <router-link class="link-text" to="/">Pomodoro</router-link>
     </div>
     <div class="sub-links">
-      <router-link class="link-text new-summary-link" to="/Summarize">New Summary</router-link>
+      <router-link class="link-text new-summary-link" to="/">Focus</router-link>
+      <router-link class="link-text my-summaries-link" to="/Summarize">New Summary</router-link>
       <router-link class="link-text my-summaries-link" to="/MySummaries">All Summaries</router-link>
       <router-link class="link-text my-summaries-link" to="/Bookmarked">Bookmarked</router-link>
     </div>

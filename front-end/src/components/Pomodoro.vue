@@ -30,6 +30,15 @@
         </svg>
       </button>
     </div>
+    <div class="animate__animated animate__bounceIn message animate__delay-1s" v-show="!timeOut && start" >
+      Click play to begin your study timer. Once the timer completes please complete a summary of your study session.
+    </div>
+    <div class="animate__animated animate__bounceIn message" v-show="!timeOut && !start && timeRunning" >
+      Time to focus!
+    </div>
+    <div class="animate__animated animate__bounceIn message" v-show="!timeOut && !start && !timeRunning" >
+      You broke your focus... Hurry back!
+    </div>
     <div class="animate__animated animate__bounceIn message" v-show="timeOut" >
       Way to focus!
     </div>
@@ -42,6 +51,7 @@
 <script>
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Pomodoro',
   components: {
   },
@@ -86,7 +96,7 @@ export default {
         return;
       }
       while(this.timeRunning){
-        await this.sleep(100); //TODO: Change this back to 1000 ms after grading
+        await this.sleep(1000); //TODO: Change this back to 1000 ms after grading
         if(this.timeRunning){
           this.runningTime--;
           this.displayedTime = this.runningTime;
@@ -177,6 +187,7 @@ export default {
   color: white;
   background: white;
   border: none;
+  cursor: pointer;
   overflow: visible
 }
 

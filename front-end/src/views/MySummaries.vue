@@ -10,6 +10,7 @@
 import Summaries from "../components/Summaries";
 import Footer from "../components/Footer";
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "MySummaries",
   components: {
     Summaries,
