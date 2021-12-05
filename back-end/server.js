@@ -19,7 +19,8 @@ const summarySchema = new mongoose.Schema({
     description: String,
     bookmarked: Boolean,
     dateAdded: String,
-    categories: Array
+    categories: Array,
+    editing: Boolean
 });
 
 const categoriesSchema = new mongoose.Schema({
@@ -36,7 +37,8 @@ app.post('/api/summaries/', async (req, res) => {
         description: req.body.description,
         categories: req.body.categories,
         dateAdded: req.body.dateAdded,
-        bookmarked: req.body.bookmarked
+        bookmarked: req.body.bookmarked,
+        editing: req.body.editing
     });
     try {
         await summary.save();
@@ -95,10 +97,36 @@ app.get('/api/summaries', async (req, res) => {
     }
 });
 
-app.put('/api/summaries/:id', async (req, res) => {
+app.put('/api/summaries/:id/bookmark', async (req, res) => {
     try{
         let summary = await Summary.findOne({ _id: req.params.id });
         summary.bookmarked = req.body.bookmarked;
+        summary.save();
+        res.send(summary);
+    }catch(error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.put('/api/summaries/:id/edit', async (req, res) => {
+    try{
+        let summary = await Summary.findOne({ _id: req.params.id });
+        summary.editing = req.body.editing;
+        summary.save();
+        res.send(summary);
+    }catch(error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.put('/api/summaries/:id', async (req, res) => {
+    try{
+        let summary = await Summary.findOne({ _id: req.params.id });
+        summary.title = req.body.title;
+        summary.description = req.body.description;
+        summary.editing = req.body.editing;
         summary.save();
         res.send(summary);
     }catch(error) {

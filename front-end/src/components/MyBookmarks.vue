@@ -28,7 +28,10 @@
           {{ summary.description }}
         </div>
         <div class="date">
-          -- {{ summary.dateAdded }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar-event calendar" viewBox="0 0 16 16">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>          </svg>
+            {{ summary.dateAdded }}
         </div>
         <div class="categories">
           <div v-for="category in summary.categories" v-bind:key="category" class="category-text">
@@ -69,6 +72,11 @@ export default {
 </script>
 
 <style scoped>
+
+.calendar{
+  margin-right: 8px;
+}
+
 .summary-object{
   margin-top: 45px;
   display: flex;
@@ -92,7 +100,7 @@ export default {
 
 .description {
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .date {

@@ -11,31 +11,54 @@
     <div class="filter-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-      </svg>check to apply filter(s) and include any summaries with a selected category<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-    </svg>
+      </svg>
+      check to apply filter(s) and include any summaries with a selected category
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+      </svg>
     </div>
     <div class="summaries-wrap">
       <div v-for="summary in filteredCategories" v-bind:key="summary.id" class="summary-object">
-        <div @click="toggleBookmark(summary)" v-show="!summary.bookmarked" class="bookmark">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bookmark icon" viewBox="0 0 16 16">
+        <div v-show="!summary.bookmarked" class="bookmark">
+          <svg v-if="!summary.editing" @click="edit(summary)" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil edit" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+          </svg>
+          <svg v-if="summary.editing" @click="save(summary)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-check-lg edit" viewBox="0 0 16 16">
+            <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+            <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+          </svg>
+          <svg @click="toggleBookmark(summary)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bookmark icon" viewBox="0 0 16 16">
             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
           </svg>
         </div>
         <div  v-show="summary.bookmarked" class="bookmark">
-          <svg @click="toggleBookmark(summary)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bookmark-check icon" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
-            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+          <svg v-if="!summary.editing" @click="edit(summary)" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil edit" viewBox="0 0 16 16">
+            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+          </svg>
+          <svg v-if="summary.editing" @click="save(summary)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-check-lg edit" viewBox="0 0 16 16">
+            <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+            <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+          </svg>
+          <svg @click="toggleBookmark(summary)" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#3f4a60" class="bi bi-bookmark-fill icon" viewBox="0 0 16 16">
+            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
           </svg>
         </div>
-        <div class="title">
+        <div v-if="summary.editing">
+          <input type="text" class="form-control title" id="FormControlInput1" v-model="newTitle">
+        </div>
+        <div v-if="!summary.editing" class="title">
           {{ summary.title }}
         </div>
-        <div class="description">
+        <div v-if="summary.editing">
+          <textarea class="form-control description" id="FormControlInput2" rows="3" v-model="newDescription"></textarea>
+        </div>
+        <div v-if="!summary.editing" class="description">
           {{ summary.description }}
         </div>
         <div class="date">
-          -- {{ summary.dateAdded }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-calendar-event calendar" viewBox="0 0 16 16">
+            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>          </svg>{{ summary.dateAdded }}
         </div>
         <div class="categories">
           <div v-for="category in summary.categories" v-bind:key="category" class="category-text">
@@ -66,6 +89,9 @@ export default {
       allCategories: [],
       summaries: [],
       newCategory: '',
+      editing: false,
+      newTitle: '',
+      newDescription: '',
     }
   },
   methods: {
@@ -95,7 +121,7 @@ export default {
     },
      async toggleBookmark(summary) {
       try{
-        let newSummary = await axios.put('/api/summaries/' + summary._id, {
+        let newSummary = await axios.put('/api/summaries/' + summary._id + '/bookmark', {
           bookmarked: !summary.bookmarked,
         });
         await this.getSummaries();
@@ -136,6 +162,38 @@ export default {
         return false;
       }
     },
+    async edit(summary) {
+      try{
+        if(!summary.editing){
+          this.newTitle = summary.title;
+          this.newDescription = summary.description;
+        }
+        let newSummary = await axios.put('/api/summaries/' + summary._id +'/edit', {
+          editing: !summary.editing,
+        });
+        await this.getSummaries();
+        console.log(newSummary);
+        return true;
+      }catch(error) {
+        console.log(error);
+      }
+    },
+    async save(summary) {
+      try{
+        let newSummary = await axios.put('/api/summaries/' + summary._id, {
+          title: this.newTitle,
+          description: this.newDescription,
+          editing: !summary.editing,
+        });
+        await this.getSummaries();
+        console.log(newSummary);
+        this.newTitle = '';
+        this.newDescription = '';
+        return true;
+      }catch(error) {
+        console.log(error);
+      }
+    }
   },
   computed: {
     filteredCategories() {
@@ -166,6 +224,14 @@ export default {
 </script>
 
 <style scoped>
+
+.calendar{
+  margin-right: 8px;
+}
+
+.edit{
+  margin-right: 40px;
+}
 
 .tag-wrap{
   display: flex;
@@ -251,12 +317,13 @@ export default {
 
 .description {
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .date {
   text-align: left;
   margin-bottom: 10px;
+  font-size: 12px;
 }
 
 .categories {

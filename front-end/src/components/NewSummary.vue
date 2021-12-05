@@ -74,8 +74,10 @@ export default {
           description: this.summary.description,
           categories: tempCategories,
           dateAdded: date,
-          bookmarked: false
-        })
+          bookmarked: false,
+          editing: false,
+        });
+        alert('Summary successfully added!');
       }catch(error){
         console.log(error);
       }
@@ -110,6 +112,7 @@ export default {
         await axios.put('/api/categories/', {
           newCategory: this.newCategory
         });
+        alert('Category successfully added!');
       }catch(error){
         console.log(error);
         return false;
