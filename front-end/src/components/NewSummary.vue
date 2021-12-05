@@ -60,7 +60,6 @@ export default {
   },
   methods: {
     async addSummary() {
-      await axios.post('/api/categories/');
       let tempCategories = []
       this.summary.categories.forEach(category => {
           tempCategories.push(category);
@@ -127,8 +126,9 @@ export default {
       }
     },
   },
-  created() {
-    this.getCategories();
+  async created() {
+    await axios.post('/api/categories/');
+    await this.getCategories();
   }
 }
 </script>
