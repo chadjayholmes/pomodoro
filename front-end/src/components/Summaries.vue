@@ -231,6 +231,7 @@ export default {
 
 .edit{
   margin-right: 40px;
+  cursor: pointer;
 }
 
 .tag-wrap{
@@ -275,6 +276,7 @@ export default {
 
 .checkbox {
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .button-category{

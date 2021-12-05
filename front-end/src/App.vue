@@ -43,6 +43,19 @@
   margin-left: 25px
 }
 
+@media only screen and (max-width: 600px){
+  .sub-links{
+    flex-direction: column;
+  }
+  .my-summaries-link{
+    margin-left: 0px;
+  }
+  .link-text{
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+}
+
 
 
 </style>
