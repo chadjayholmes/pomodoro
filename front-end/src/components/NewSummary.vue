@@ -126,9 +126,8 @@ export default {
       }
     },
   },
-  async created() {
-    await axios.post('/api/categories/');
-    await this.getCategories();
+  created() {
+    this.getCategories();
   }
 }
 </script>
