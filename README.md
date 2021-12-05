@@ -19,8 +19,6 @@ This current version is my first iteration of this application. As I have gone t
 
 ## Features to come
 ```
-- An actual database allowing for account based use and note saving
-- Category creation during the creation of a new summary
 - Configurable break periods between sprints
 ```
 
