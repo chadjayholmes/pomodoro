@@ -4,7 +4,7 @@
       <div class="tag-wrap">
         <div class="filter-category" v-for="category in this.allCategories" :key="category">
           <input @change="applyFilter(category)" class="checkbox" type="checkbox" value="" id="defaultCheck1">
-          <label>{{ category }}</label>
+          <label class="filter-text">{{ category }}</label>
         </div>
       </div>
     </div>
@@ -12,7 +12,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
       </svg>
-      check to apply filter(s) and include any summaries with a selected category
+      check the boxes to apply filters
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
       </svg>
@@ -269,9 +269,19 @@ export default {
   margin-bottom: 2px;
 }
 
+.filter-text{
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .filter-category {
+  display: flex;
   width: auto;
   margin-right: 15px;
+  align-items: center;
+  vertical-align: middle;
+
 }
 
 .checkbox {
