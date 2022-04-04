@@ -1,7 +1,7 @@
 <template>
   <div class="timer">
     <div class="timer-text">
-      {{ displayTime }}
+      {{ displayTime2 }}
     </div>
     <div class="progress">
       <div class="progress-bar" id="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: green"></div>
@@ -49,6 +49,13 @@
 </template>
 
 <script>
+import 'timer-stopwatch'
+let Stopwatch = require('timer-stopwatch');
+let options = {
+  refreshRateMS: 1000,		// How often the clock should be updated
+  almostDoneMS: 10000, 	// When counting down - this event will fire with this many milliseconds remaining on the clock
+}
+// let timer = new Stopwatch(1500000, options)
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -64,16 +71,21 @@ export default {
       start: true,
       displayedTime: 0,
       timeOut: false,
+      timer: new Stopwatch(1500000, options),
+      progressPercentage: 100
     }
   },
   methods: {
     startTimer(){
       this.timeRunning = true;
       this.start = false;
-      this.timer();
+      //
+      this.timer.start();
       this.setProgress();
     },
     pauseTimer(){
+      this.pausedTime = this.timer.ms/1000;
+      this.timer.stop();
       this.pausedTime = this.runningTime;
       this.timeRunning = false;
       this.start = false;
@@ -87,52 +99,67 @@ export default {
       this.runningTime = this.startTime;
       this.pausedTime = this.startTime;
       this.displayedTime = this.startTime;
+      this.timer.reset();
       this.setProgress();
     },
-    async timer() {
-      if(this.runningTime <= 0){
-        this.timeOut = true;
-        this.timeRunning = false;
-        return;
-      }
-      while(this.timeRunning){
-        await this.sleep(1000); //TODO: Change this back to 1000 ms after grading
-        if(this.timeRunning){
-          this.runningTime--;
-          this.displayedTime = this.runningTime;
-          this.setProgress();
-          if(this.runningTime <= 0){
-            this.timeOut = true;
-            this.timeRunning = false;
-            break;
-          }
-        }
-      }
-    },
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    },
+    // async timer() {
+    //   if(this.runningTime <= 0){
+    //     this.timeOut = true;
+    //     this.timeRunning = false;
+    //     return;
+    //   }
+    //   while(this.timeRunning){
+    //     this.runningTime = this.time;
+    //     this.displayedTime = this.runningTime;
+    //     this.setProgress();
+    //     // await this.sleep(1000); //TODO: Change this back to 1000 ms after grading
+    //     // if(this.timeRunning){
+    //     //   this.runningTime--;
+    //     //   this.displayedTime = this.runningTime;
+    //     //   this.setProgress();
+    //     //   if(this.runningTime <= 0){
+    //     //     this.timeOut = true;
+    //     //     this.timeRunning = false;
+    //     //     break;
+    //     //   }
+    //     // }
+    //     if(this.runningTime <= 0){
+    //       this.timeOut = true;
+    //       this.timeRunning = false;
+    //       break;
+    //     }
+    //   }
+    // },
+    // sleep(ms) {
+    //   return new Promise(resolve => setTimeout(resolve, ms));
+    // },
     redirectToSummary() {
       this.$router.push({
         path: '/Summarize'})
     },
     setProgress() {
       let progressBar = document.getElementById('progress');
-      let progressPercentage = (this.displayedTime/1500)*100
-      progressBar.style.width = progressPercentage + '%'
-      if(progressPercentage > 66){
+      this.progressPercentage = (this.timer.ms/1000/1500)*100
+      progressBar.style.width = this.progressPercentage + '%'
+      if(this.progressPercentage > 66){
         progressBar.style.backgroundColor = 'green'
       }
-      if(progressPercentage > 20 && progressPercentage < 66){
+      if(this.progressPercentage > 20 && this.progressPercentage < 66){
         progressBar.style.backgroundColor = 'yellow'
       }
-      if(progressPercentage < 20){
+      if(this.progressPercentage < 20){
         progressBar.style.backgroundColor = 'red'
+      }
+
+      if( this.progressPercentage <= 0){
+        this.timeOut = true;
+        this.timer.stop();
       }
     }
   },
   computed: {
     displayTime: function () {
+      this.setProgress();
       let minutes = 0;
       let seconds = 0;
       minutes = Math.trunc(this.displayedTime/60)
@@ -154,6 +181,36 @@ export default {
       }
       myString += seconds.toString();
       return myString;
+    },
+    displayTime2: function () {
+      let minutes = 0;
+      let seconds = 0;
+      minutes = Math.trunc((this.timer.ms/1000)/60)
+
+      if(this.start){
+        seconds = 0;
+      }
+      else{
+        seconds = Math.trunc((this.timer.ms/1000) % 60);
+      }
+
+      let myString = ''
+      if(minutes < 10){
+        myString += '0'
+      }
+      myString += minutes.toString() + ':'
+      if(seconds < 10){
+        myString += '0'
+      }
+
+
+
+      myString += seconds.toString();
+      return myString;
+    },
+    progress: function() {
+      this.setProgress()
+      return (this.timer.ms/1000/1500)*100
     },
   },
   mounted() {
