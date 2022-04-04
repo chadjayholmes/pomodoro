@@ -71,7 +71,7 @@ export default {
       start: true,
       displayedTime: 0,
       timeOut: false,
-      timer: new Stopwatch(1500000, options),
+      timer: new Stopwatch(1500999, options),
       progressPercentage: 100
     }
   },
