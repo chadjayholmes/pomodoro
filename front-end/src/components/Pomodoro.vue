@@ -50,6 +50,7 @@
 
 <script>
 import 'timer-stopwatch'
+
 let Stopwatch = require('timer-stopwatch');
 let options = {
   refreshRateMS: 1000,		// How often the clock should be updated
@@ -72,7 +73,7 @@ export default {
       displayedTime: 0,
       timeOut: false,
       timer: new Stopwatch(1500999, options),
-      progressPercentage: 100
+      progressPercentage: 100,
     }
   },
   methods: {
@@ -81,7 +82,6 @@ export default {
       this.start = false;
       //
       this.timer.start();
-      this.setProgress();
     },
     pauseTimer(){
       this.pausedTime = this.timer.ms/1000;
@@ -158,7 +158,7 @@ export default {
     }
   },
   computed: {
-    displayTime: function () {
+    /*displayTime: function () {
       this.setProgress();
       let minutes = 0;
       let seconds = 0;
@@ -181,7 +181,7 @@ export default {
       }
       myString += seconds.toString();
       return myString;
-    },
+    },*/
     displayTime2: function () {
       let minutes = 0;
       let seconds = 0;
@@ -203,14 +203,15 @@ export default {
         myString += '0'
       }
 
-
-
+      if(this.timer.ms <= 1500000){
+        this.setProgress();
+      }
       myString += seconds.toString();
       return myString;
     },
     progress: function() {
-      this.setProgress()
-      return (this.timer.ms/1000/1500)*100
+      console.log(this.timer.ms);
+      return (this.timer.ms / 1000 / 1500) * 100
     },
   },
   mounted() {
