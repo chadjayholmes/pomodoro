@@ -23,4 +23,11 @@ export default {
 * {
   background-color: white;
 }
+
+footer{
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  margin-left: -100px;
+}
 </style>

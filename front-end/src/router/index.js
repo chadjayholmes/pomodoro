@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Summarize from '../views/Summarize.vue'
 import MySummaries from '../views/MySummaries'
 import Bookmarked from '../views/Bookmarked'
+import { authGuard } from '../auth/authGuard';
 
 Vue.use(VueRouter)
 
@@ -16,17 +17,20 @@ const routes = [
   {
     path: '/Summarize',
     name: 'Summarize',
-    component: Summarize
+    component: Summarize,
+    beforeEnter: authGuard,
   },
   {
     path: '/MySummaries',
     name: 'MySummaries',
-    component: MySummaries
+    component: MySummaries,
+    beforeEnter: authGuard,
   },
   {
     path: '/Bookmarked',
     name: 'Bookmarked',
-    component: Bookmarked
+    component: Bookmarked,
+    beforeEnter: authGuard,
   }
 ]
 

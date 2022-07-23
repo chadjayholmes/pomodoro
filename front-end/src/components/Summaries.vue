@@ -100,7 +100,6 @@ export default {
       for(let i = 0; i < this.categories.length; i++){
         if(this.categories[i] === category){
           exists = true;
-          console.log("caught a repeat");
           this.categories.splice(i, 1);
         }
       }
@@ -111,33 +110,36 @@ export default {
     },
     async getSummaries() {
       try{
-        let summaries = await axios.get("/api/summaries");
+        let summaries = await axios.get("/api/summaries", {
+          params: {
+            user: this.$auth.user.email
+          }
+        });
         this.summaries = summaries.data;
-        console.log(this.summaries);
       }catch(error){
-        console.log(error);
         return false;
       }
     },
      async toggleBookmark(summary) {
       try{
-        let newSummary = await axios.put('/api/summaries/' + summary._id + '/bookmark', {
+        await axios.put('/api/summaries/' + summary._id + '/bookmark', {
+          user: this.$auth.user.email,
           bookmarked: !summary.bookmarked,
         });
         await this.getSummaries();
-        console.log(newSummary);
         return true;
       }catch(error) {
-        console.log(error);
+        return
       }
     },
     async deleteSummary(summary) {
       try{
-        await axios.delete('/api/summaries/' + summary._id);
+        await axios.delete('/api/summaries/' + summary._id, {
+          user: this.$auth.user.email,
+        });
         await this.getSummaries();
         return true;
       }catch(error){
-        console.log(error);
         return false;
       }
     },
@@ -145,20 +147,22 @@ export default {
       try{
         debugger;
         await axios.put('/api/categories/', {
+          user: this.$auth.user.email,
           newCategory: this.newCategory
         });
       }catch(error){
-        console.log(error);
         return false;
       }
     },
     async getCategories() {
       try{
-        let gotCategories = await axios.get('/api/categories/');
-        console.log(gotCategories.data[0].allCategories);
+        let gotCategories = await axios.get('/api/categories/', {
+          params: {
+            user: this.$auth.user.email,
+          }
+        });
         this.allCategories = gotCategories.data[0].allCategories;
       }catch(error){
-        console.log(error);
         return false;
       }
     },
@@ -168,30 +172,30 @@ export default {
           this.newTitle = summary.title;
           this.newDescription = summary.description;
         }
-        let newSummary = await axios.put('/api/summaries/' + summary._id +'/edit', {
+        await axios.put('/api/summaries/' + summary._id +'/edit', {
           editing: !summary.editing,
+          user: this.$auth.user.email
         });
         await this.getSummaries();
-        console.log(newSummary);
         return true;
       }catch(error) {
-        console.log(error);
+        return
       }
     },
     async save(summary) {
       try{
-        let newSummary = await axios.put('/api/summaries/' + summary._id, {
+        await axios.put('/api/summaries/' + summary._id, {
+          user: this.$auth.user.email,
           title: this.newTitle,
           description: this.newDescription,
           editing: !summary.editing,
         });
         await this.getSummaries();
-        console.log(newSummary);
         this.newTitle = '';
         this.newDescription = '';
         return true;
       }catch(error) {
-        console.log(error);
+        return
       }
     }
   },
@@ -203,12 +207,9 @@ export default {
 
       if(this.filterApplied){
         let filtered = this.summaries.filter((summary) => {
-          console.log(summary.categories);
-          console.log(this.categories);
           return this.categories.every(val => summary.categories.includes(val));
           // return summary.categories.join(',').includes(this.categories.join(','));
         });
-        console.log(filtered);
         return filtered;
       }
       else {

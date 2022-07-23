@@ -8,9 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.22.2",
     "axios": "^0.24.0",
+    "bootstrap": "^5.2.0",
     "core-js": "^3.6.5",
     "moment": "^2.29.1",
+    "timer-stopwatch": "^0.2.0",
     "vue": "^2.6.11",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0"

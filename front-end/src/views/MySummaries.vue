@@ -20,5 +20,10 @@ export default {
 </script>
 
 <style scoped>
-
+footer{
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  margin-left: -100px;
+}
 </style>

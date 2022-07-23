@@ -15,6 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/pomodoro', {
 });
 
 const summarySchema = new mongoose.Schema({
+    user: String,
     title: String,
     description: String,
     bookmarked: Boolean,
@@ -24,6 +25,7 @@ const summarySchema = new mongoose.Schema({
 });
 
 const categoriesSchema = new mongoose.Schema({
+    user: String,
     allCategories: Array,
 })
 
@@ -33,6 +35,7 @@ const Categories = mongoose.model('Categories', categoriesSchema);
 
 app.post('/api/summaries/', async (req, res) => {
     const summary = new Summary({
+        user: req.body.user,
         title: req.body.title,
         description: req.body.description,
         categories: req.body.categories,
@@ -42,10 +45,8 @@ app.post('/api/summaries/', async (req, res) => {
     });
     try {
         await summary.save();
-        console.log(summary);
         res.send(summary);
     }catch(error){
-        console.log(error);
         res.sendStatus(500);
     }
 });
@@ -53,23 +54,22 @@ app.post('/api/summaries/', async (req, res) => {
 app.post('/api/categories/', async (req, res) => {
     try{
         let newCategories = new Categories( {
+            user: req.body.user,
             allCategories: [],
         });
         await newCategories.save();
     }catch(error) {
-        console.log(error);
         res.sendStatus(500);
     }
 })
 
 app.put('/api/categories/', async (req, res) => {
     try{
-        let newArray = await Categories.findOne();
+        let newArray = await Categories.findOne({ user: req.body.user });
         newArray.allCategories.push(req.body.newCategory);
         newArray.save();
         res.send(newArray);
     } catch(error){
-        console.log(error);
         res.sendStatus(500);
     }
 });
@@ -77,60 +77,53 @@ app.put('/api/categories/', async (req, res) => {
 app.get('/api/categories/', async (req, res) => {
     try{
         debugger;
-        let output = await Categories.find();
-        console.log(output);
+        let output = await Categories.find({ user: req.query.user });
         res.send(output);
     }catch(error){
-        console.log(error);
         res.sendStatus(500);
     }
 });
 
 app.get('/api/summaries', async (req, res) => {
     try {
-        let summaries = await Summary.find();
-        console.log(summaries);
+        let summaries = await Summary.find({ user: req.query.user });
         res.send(summaries);
     } catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
 });
 
 app.put('/api/summaries/:id/bookmark', async (req, res) => {
     try{
-        let summary = await Summary.findOne({ _id: req.params.id });
+        let summary = await Summary.findOne({ _id: req.params.id, user: req.body.user });
         summary.bookmarked = req.body.bookmarked;
         summary.save();
         res.send(summary);
     }catch(error) {
-        console.log(error);
         res.sendStatus(500);
     }
 });
 
 app.put('/api/summaries/:id/edit', async (req, res) => {
     try{
-        let summary = await Summary.findOne({ _id: req.params.id });
+        let summary = await Summary.findOne({ _id: req.params.id, user: req.body.user });
         summary.editing = req.body.editing;
         summary.save();
         res.send(summary);
     }catch(error) {
-        console.log(error);
         res.sendStatus(500);
     }
 });
 
 app.put('/api/summaries/:id', async (req, res) => {
     try{
-        let summary = await Summary.findOne({ _id: req.params.id });
+        let summary = await Summary.findOne({ _id: req.params.id, user: req.body.user });
         summary.title = req.body.title;
         summary.description = req.body.description;
         summary.editing = req.body.editing;
         summary.save();
         res.send(summary);
     }catch(error) {
-        console.log(error);
         res.sendStatus(500);
     }
 });
@@ -138,11 +131,11 @@ app.put('/api/summaries/:id', async (req, res) => {
 app.delete('/api/summaries/:id', async (req, res) => {
     try {
         await Summary.deleteOne({
-            _id: req.params.id
+            _id: req.params.id,
+            user: req.body.user
         });
         res.sendStatus(200);
     } catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
 });

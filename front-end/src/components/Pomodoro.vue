@@ -210,7 +210,6 @@ export default {
       return myString;
     },
     progress: function() {
-      console.log(this.timer.ms);
       return (this.timer.ms / 1000 / 1500) * 100
     },
   },
@@ -253,6 +252,7 @@ export default {
   font-weight: 600;
   font-size: 24px;
   margin-top: 30px;
+  background-color: white;
 }
 
 .progress {

@@ -70,6 +70,7 @@ export default {
 */
       try{
         await axios.post('api/summaries/', {
+          user: this.$auth.user.email,
           title: this.summary.title,
           description: this.summary.description,
           categories: tempCategories,
@@ -79,7 +80,7 @@ export default {
         });
         alert('Summary successfully added!');
       }catch(error){
-        console.log(error);
+        return
       }
       this.summary.title = '';
       this.summary.description = '';
@@ -95,7 +96,6 @@ export default {
       for(let i = 0; i < this.summary.categories.length; i++){
         if(this.summary.categories[i] === category){
           exists = true;
-          console.log("caught a repeat");
           this.summary.categories.splice(i, 1);
         }
       }
@@ -110,21 +110,23 @@ export default {
       try{
         debugger;
         await axios.put('/api/categories/', {
+          user: this.$auth.user.email,
           newCategory: this.newCategory
         });
         alert('Category successfully added!');
       }catch(error){
-        console.log(error);
         return false;
       }
     },
     async getCategories() {
       try{
-        let gotCategories = await axios.get('/api/categories/');
-        console.log(gotCategories.data[0].allCategories);
+        let gotCategories = await axios.get('/api/categories/', {
+          params: {
+            user: this.$auth.user.email
+          }
+        });
         this.allCategories = gotCategories.data[0].allCategories;
       }catch(error){
-        console.log(error);
         return false;
       }
     },

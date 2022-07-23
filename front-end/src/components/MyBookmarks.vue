@@ -54,12 +54,15 @@ export default {
     }
   },
   async mounted() {
-    let res = await axios.get('/api/summaries/');
+    let res = await axios.get('/api/summaries/', {
+      params: {
+        user: this.$auth.user.email,
+      }
+    });
     let  summaries = res.data;
     this.bookmarked = summaries.filter((summary) => {
       return summary.bookmarked
     });
-    console.log(this.bookmarked);
 
     /*for(let i = 0; i < this.$root.$data.summaries.length; i++){
       if(this.$root.$data.summaries[i].bookmarked){
