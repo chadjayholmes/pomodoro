@@ -2,7 +2,8 @@
 node_modules
 /dist
 front-end/auth_config.json
-
+front-end/package-lock.json
+back-end/package-lock.json
 
 # local env files
 .env.local
