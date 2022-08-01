@@ -53,25 +53,27 @@ app.post('/api/summaries/', async (req, res) => {
 
 app.post('/api/categories/', async (req, res) => {
     try{
-        let newCategories = new Categories( {
-            user: req.body.user,
-            allCategories: [],
-        });
-        await newCategories.save();
-    }catch(error) {
+        let userArray = await Categories.findOne({ user: req.body.user });
+        if(!userArray){
+            let newCategories = new Categories( {
+                user: req.body.user,
+                allCategories: [],
+            });
+            newCategories.allCategories.push(req.body.newCategory)
+            await newCategories.save();
+        } else {
+            let newArray = await Categories.findOne({ user: req.body.user });
+            newArray.allCategories.push(req.body.newCategory);
+            newArray.save();
+            res.send(newArray);
+        }
+    } catch(error) {
         res.sendStatus(500);
     }
 })
 
 app.put('/api/categories/', async (req, res) => {
-    try{
-        let newArray = await Categories.findOne({ user: req.body.user });
-        newArray.allCategories.push(req.body.newCategory);
-        newArray.save();
-        res.send(newArray);
-    } catch(error){
-        res.sendStatus(500);
-    }
+
 });
 
 app.get('/api/categories/', async (req, res) => {

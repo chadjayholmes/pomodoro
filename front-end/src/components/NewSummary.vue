@@ -108,8 +108,10 @@ export default {
     },
     async addNewCategory() {
       try{
+        console.log('got here')
+        console.log(this.$auth.user.email)
         debugger;
-        await axios.put('/api/categories/', {
+        await axios.post('/api/categories/', {
           user: this.$auth.user.email,
           newCategory: this.newCategory
         });
