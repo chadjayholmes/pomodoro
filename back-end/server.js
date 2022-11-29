@@ -132,10 +132,8 @@ app.put('/api/summaries/:id', async (req, res) => {
 
 app.delete('/api/summaries/:id', async (req, res) => {
     try {
-        await Summary.deleteOne({
-            _id: req.params.id,
-            user: req.body.user
-        });
+        var response = await Summary.findByIdAndRemove(req.params.id);
+        console.log(response)
         res.sendStatus(200);
     } catch (error) {
         res.sendStatus(500);

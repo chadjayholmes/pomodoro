@@ -23,9 +23,9 @@
       </div>-->
     </div>
     <div class="new-category">
-      <form>
+      <form @submit.prevent="addNewCategory">
         <input v-model="newCategory" class="category-input" type="text" placeholder="New Category">
-        <button @click="addNewCategory" class="submit">Add</button>
+        <button class="submit">Add</button>
       </form>
     </div>
 
@@ -110,11 +110,12 @@ export default {
       try{
         console.log('got here')
         console.log(this.$auth.user.email)
-        debugger;
         await axios.post('/api/categories/', {
           user: this.$auth.user.email,
           newCategory: this.newCategory
         });
+        this.allCategories.push(this.newCategory)
+        this.newCategory = ''
         alert('Category successfully added!');
       }catch(error){
         return false;

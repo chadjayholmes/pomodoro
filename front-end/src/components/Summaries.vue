@@ -134,9 +134,11 @@ export default {
     },
     async deleteSummary(summary) {
       try{
-        await axios.delete('/api/summaries/' + summary._id, {
+        debugger
+        var response = await axios.delete('/api/summaries/' + summary._id, {
           user: this.$auth.user.email,
         });
+        console.log(response.status)
         await this.getSummaries();
         return true;
       }catch(error){

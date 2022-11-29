@@ -1,7 +1,19 @@
 <template>
   <div class="timer">
     <div class="timer-text">
-      {{ displayTime2 }}
+      <div class="stopwatch">
+        <div class="edit-time">
+          <div class="increment-text" @click="incrementTime">
+            +
+          </div>
+          <div class="increment-text" @click="decrementTime">
+            -
+          </div>
+        </div>
+        <div>
+          {{ displayTime2 }}
+        </div>
+      </div>
     </div>
     <div class="progress">
       <div class="progress-bar" id="progress" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%; background-color: green"></div>
@@ -17,7 +29,7 @@
           <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
         </svg>
       </button>
-      <button v-show="timeOut" @click="redirectToSummary" class="summary-button">
+      <button @click="redirectToSummary" class="summary-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pencil-square" viewBox="0 0 20 20">
           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -48,6 +60,7 @@
   </div>
 </template>
 
+
 <script>
 import 'timer-stopwatch'
 
@@ -69,6 +82,7 @@ export default {
       pausedTime: 1500,
       runningTime: 1500,
       timeRunning: false,
+      totalMaxTime: 1500,
       start: true,
       displayedTime: 0,
       timeOut: false,
@@ -137,9 +151,21 @@ export default {
       this.$router.push({
         path: '/Summarize'})
     },
+    incrementTime() {
+      if(this.totalMaxTime < 3560) {
+        this.totalMaxTime = this.totalMaxTime + 60
+        this.timer = new Stopwatch((this.totalMaxTime * 1000) + 999, options)
+      }
+    },
+    decrementTime() {
+      if(this.totalMaxTime >= 60) {
+        this.totalMaxTime -= 60
+        this.timer = new Stopwatch((this.totalMaxTime * 1000) + 999, options)
+      }
+    },
     setProgress() {
       let progressBar = document.getElementById('progress');
-      this.progressPercentage = (this.timer.ms/1000/1500)*100
+      this.progressPercentage = (this.timer.ms/1000/this.totalMaxTime)*100
       progressBar.style.width = this.progressPercentage + '%'
       if(this.progressPercentage > 66){
         progressBar.style.backgroundColor = 'green'
@@ -203,14 +229,14 @@ export default {
         myString += '0'
       }
 
-      if(this.timer.ms <= 1500000){
+      if(this.timer.ms <= this.totalMaxTime * 1000){
         this.setProgress();
       }
       myString += seconds.toString();
       return myString;
     },
     progress: function() {
-      return (this.timer.ms / 1000 / 1500) * 100
+      return (this.timer.ms / 1000 / this.totalMaxTime) * 100
     },
   },
   mounted() {
@@ -255,6 +281,24 @@ export default {
   background-color: white;
 }
 
+.stopwatch {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-right: 24px;
+}
+
+.edit-time {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.increment-text {
+  padding-right: 12px;
+  font-size: 36px;
+}
+
 .progress {
   width: 50%;
   margin-right: auto;
@@ -268,7 +312,7 @@ export default {
     font-size: 120px;
   }
   .progress{
-    width: 100%;
+    width: 94%;
   }
 }
 
