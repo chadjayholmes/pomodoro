@@ -59,8 +59,10 @@ app.post('/api/categories/', async (req, res) => {
                 user: req.body.user,
                 allCategories: [],
             });
-            newCategories.allCategories.push(req.body.newCategory)
-            await newCategories.save();
+            newCategories.allCategories.push(req.body.newCategory);
+            console.log(newCategories);
+            newCategories.save();
+            res.send(newCategories);
         } else {
             let newArray = await Categories.findOne({ user: req.body.user });
             newArray.allCategories.push(req.body.newCategory);

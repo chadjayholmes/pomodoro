@@ -8,14 +8,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <!-- <li class="nav-item" >
+          <li class="nav-item" >
             <router-link v-if="this.$router.currentRoute.path === '/'" class="nav-link active" to="/">
-            Home
+            Timer
             </router-link>
             <router-link v-if="this.$router.currentRoute.path !== '/'" class="nav-link" to="/">
-            Home
+            Timer
             </router-link>
-          </li> -->
+          </li>
           <li class="nav-item">
             <router-link class="nav-link active" to="/Summarize" v-if="$auth.isAuthenticated &&
             this.$router.currentRoute.path === '/Summarize'">
@@ -75,10 +75,14 @@ export default {
       this.$auth.loginWithRedirect();
     },
     // Log the user out
-    logout() {
-      this.$auth.logout({
-        returnTo: window.location.origin
-      });
+    async logout() {
+      const isSure = confirm('Are you sure you want to sign out?');
+      if (isSure) {
+        await this.$auth.logout({
+          returnTo: window.location.origin
+        });
+        alert('You have successfully signed out');
+      }
     }
   }
 }

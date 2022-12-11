@@ -1,26 +1,23 @@
 <template>
   <form class="wrapper">
     <div class="form-group">
-      <label for="FormControlInput1">Study Topic</label>
+      <label for="FormControlInput1">Session Topic</label>
       <input v-model="summary.title" type="text" class="form-control" id="FormControlInput1">
     </div>
     <div class="form-group">
-      <label for="FormControlInput2" >Summary</label>
+      <label for="FormControlInput2" >Session Summary</label>
       <textarea v-model="summary.description" class="form-control" id="FormControlInput2" rows="6"></textarea>
     </div>
-    <div class="form-group submit-button">
-      <button class="submit" @click.prevent="addSummary">Add Summary</button>
-    </div>
-    <p>Select Category(s)</p>
+    <p>Attach Session Category(s)</p>
     <div class="form-group categories" v-for="category in this.allCategories" :key="category">
       <input @change="appendCategory(category)" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
       <label class="form-check-label" for="defaultCheck1">{{ category }}</label>
-<!--      <div class="trash" @click="deleteCategory(category)">
+     <!-- <div class="trash" @click="deleteCategory(category)">
         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
           <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
         </svg>
-      </div>-->
+      </div> -->
     </div>
     <div class="new-category">
       <form @submit.prevent="addNewCategory">
@@ -28,6 +25,10 @@
         <button class="submit">Add</button>
       </form>
     </div>
+    <div class="form-group submit-button">
+      <button class="submit" @click.prevent="addSummary">Add Summary</button>
+    </div>
+
 
   </form>
 </template>
@@ -78,7 +79,7 @@ export default {
           bookmarked: false,
           editing: false,
         });
-        alert('Summary successfully added!');
+        alert('Summary successfully added! View it in the \'All Summaries\' seciton');
       }catch(error){
         return
       }
@@ -115,9 +116,11 @@ export default {
           newCategory: this.newCategory
         });
         this.allCategories.push(this.newCategory)
+        console.log('pushed new category')
         this.newCategory = ''
         alert('Category successfully added!');
       }catch(error){
+        console.log(error.message)
         return false;
       }
     },
@@ -128,7 +131,13 @@ export default {
             user: this.$auth.user.email
           }
         });
-        this.allCategories = gotCategories.data[0].allCategories;
+        if(gotCategories.data[0].allCategories) {
+          this.allCategories = gotCategories.data[0].allCategories;
+        }
+        else {
+          this.allCategories = []
+        }
+
       }catch(error){
         return false;
       }
@@ -174,6 +183,7 @@ export default {
 .submit-button{
   display: flex;
   justify-content: flex-end;
+  padding-top: 30px;
 }
 
 .categories {

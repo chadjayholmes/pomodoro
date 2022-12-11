@@ -3,11 +3,15 @@
     <div class="timer-text">
       <div class="stopwatch">
         <div class="edit-time">
-          <div class="increment-text" @click="incrementTime">
-            +
+          <div class="" @click="incrementTime">
+            <div class="increment-text">
+              +
+            </div>
           </div>
-          <div class="increment-text" @click="decrementTime">
-            -
+          <div class="" @click="decrementTime">
+            <div class="increment-text">
+              -
+            </div>
           </div>
         </div>
         <div>
@@ -29,21 +33,21 @@
           <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
         </svg>
       </button>
-      <button @click="redirectToSummary" class="summary-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pencil-square" viewBox="0 0 20 20">
-          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-        </svg>
-      </button>
       <button @click='resetTimer' class="reset-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-arrow-clockwise" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
           <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
         </svg>
       </button>
+      <button @click="redirectToSummary" class="summary-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" fill="#3f4a60" class="bi bi-pencil-square" viewBox="0 0 20 20">
+          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
+      </button>
     </div>
-    <div class="animate__animated animate__bounceIn message animate__delay-1s" v-show="!timeOut && start" >
-      Click play to begin your study timer. Once the timer completes please complete a summary of your study session.
+    <div class="animate__animated animate__bounceIn message" v-show="!timeOut && start" >
+      Click play to begin your session timer. Login to access session summaries.
     </div>
     <div class="animate__animated animate__bounceIn message" v-show="!timeOut && !start && timeRunning" >
       Time to focus!
@@ -155,6 +159,11 @@ export default {
       if(this.totalMaxTime < 3560) {
         this.totalMaxTime = this.totalMaxTime + 60
         this.timer = new Stopwatch((this.totalMaxTime * 1000) + 999, options)
+        this.setProgress()
+        this.start = true
+      }
+      else {
+        alert('Pomodoro does not support sessions that exceed 60 minutes')
       }
     },
     decrementTime() {
@@ -162,6 +171,8 @@ export default {
         this.totalMaxTime -= 60
         this.timer = new Stopwatch((this.totalMaxTime * 1000) + 999, options)
       }
+      this.setProgress()
+      this.start = true
     },
     setProgress() {
       let progressBar = document.getElementById('progress');
@@ -263,6 +274,17 @@ export default {
   overflow: visible
 }
 
+.increment-text {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
 .play-button, .pause-button, .reset-button, .summary-button {
   width: 80px;
   height: 60px;
@@ -313,6 +335,12 @@ export default {
   }
   .progress{
     width: 94%;
+  }
+
+  .message{
+    width: 94%;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 

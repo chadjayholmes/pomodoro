@@ -2,6 +2,7 @@
   <div class="wrap">
     <div class="filters">
       <div class="tag-wrap">
+        <div class="filter-title">Filter by category</div>
         <div class="filter-category" v-for="category in this.allCategories" :key="category">
           <input @change="applyFilter(category)" class="checkbox" type="checkbox" value="" id="defaultCheck1">
           <label class="filter-text">{{ category }}</label>
@@ -9,13 +10,14 @@
       </div>
     </div>
     <div class="filter-title">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
       </svg>
       check the boxes to apply filters
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
-      </svg>
+      </svg> -->
     </div>
     <div class="summaries-wrap">
       <div v-for="summary in filteredCategories" v-bind:key="summary.id" class="summary-object">
@@ -134,13 +136,16 @@ export default {
     },
     async deleteSummary(summary) {
       try{
-        debugger
-        var response = await axios.delete('/api/summaries/' + summary._id, {
-          user: this.$auth.user.email,
-        });
-        console.log(response.status)
-        await this.getSummaries();
-        return true;
+        var isSure = confirm("are you sure you want to delete this summary")
+        if(isSure){
+          var response = await axios.delete('/api/summaries/' + summary._id, {
+            user: this.$auth.user.email,
+          });
+          console.log(response.status)
+          await this.getSummaries();
+          return true;
+        }
+        return false;
       }catch(error){
         return false;
       }
@@ -241,6 +246,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .wrap {
@@ -251,10 +257,11 @@ export default {
 
 .filter-title {
   text-align: center;
-  width: 70%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   font-weight: 500;
+  margin-bottom: 10px;
 }
 
 .filters {
@@ -276,6 +283,7 @@ export default {
   display: flex;
   margin-top: auto;
   margin-bottom: auto;
+  width: auto;
 }
 
 .filter-category {
@@ -284,7 +292,7 @@ export default {
   margin-right: 15px;
   align-items: center;
   vertical-align: middle;
-
+  justify-content: center;
 }
 
 .checkbox {
